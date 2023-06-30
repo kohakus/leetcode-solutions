@@ -13,27 +13,27 @@
 
 class Solution {
 public:
-  ListNode* deleteDuplicates(ListNode* head) {
-    if (head == nullptr || head->next == nullptr) {
-      return head;
-    }
-
-    ListNode dummy = ListNode(head->val - 1, head);
-    ListNode *pre = &dummy, *cur = head;
-
-    while (cur != nullptr) {
-      int tmp = cur->val;
-      if (cur->next != nullptr && tmp == cur->next->val) {
-        while (cur != nullptr && tmp == cur->val) {
-          cur = cur->next;
+    ListNode* deleteDuplicates(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return head;
         }
-        pre->next = cur;
-      } else {
-        pre = cur;
-        cur = cur->next;
-      }
-    }
 
-    return dummy.next;
-  }
+        ListNode dummy = ListNode(head->val - 1, head);
+        ListNode *pre = &dummy, *cur = head;
+
+        while (cur != nullptr) {
+            int tmp = cur->val;
+            if (cur->next != nullptr && tmp == cur->next->val) {
+                while (cur != nullptr && tmp == cur->val) {
+                    cur = cur->next;
+                }
+                pre->next = cur;
+            } else {
+                pre = cur;
+                cur = cur->next;
+            }
+        }
+
+        return dummy.next;
+    }
 };

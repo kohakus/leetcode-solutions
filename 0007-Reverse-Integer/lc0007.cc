@@ -2,15 +2,15 @@
 
 class Solution {
 public:
-  int reverse(int x) {
-    int ret = 0;
-    while (x != 0) {
-      int pop = x % 10;
-      x /= 10;
-      if (ret > 214748364 || (ret == 214748364 && pop > 7)) return 0;
-      if (ret < -214748364 || (ret == -214748364 && pop < -8)) return 0;
-      ret = ret * 10 + pop;
+    int reverse(int x) {
+        int ret = 0;
+        while (x != 0) {
+            int pop = x % 10;
+            x /= 10;
+            if (ret > 214748364 || (ret == 214748364 && pop > 7)) return 0;
+            if (ret < -214748364 || (ret == -214748364 && pop < -8)) return 0;
+            ret = ret * 10 + pop;
+        }
+        return ret;
     }
-    return ret;
-  }
 };
