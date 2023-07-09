@@ -1,5 +1,6 @@
 // C++ solution.
 
+// DP.
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {

@@ -1,5 +1,6 @@
 // C++ solution.
 
+// Hash method.
 class Solution {
 public:
     vector<int> findDisappearedNumbers(vector<int>& nums) {

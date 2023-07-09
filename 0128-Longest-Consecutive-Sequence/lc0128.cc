@@ -1,5 +1,6 @@
 // C++ solution.
 
+// UnionFind.
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
@@ -67,4 +68,24 @@ private:
     int _cnt;
 };
 
+};
+
+// Hash.
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> num_set(make_move_iterator(nums.begin()),
+                                   make_move_iterator(nums.end()));
+        int ans = 0;
+        for (int num : num_set) {
+            if (!num_set.count(num-1)) {
+                int cur_len = 1;
+                for (; num_set.count(num+1); num++) {
+                    cur_len++;
+                }
+                ans = max(ans, cur_len);
+            }
+        }
+        return ans;
+    }
 };
