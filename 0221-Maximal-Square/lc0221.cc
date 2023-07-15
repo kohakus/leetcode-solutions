@@ -5,7 +5,8 @@ class Solution {
 public:
     int maximalSquare(vector<vector<char>>& matrix) {
         if (matrix.empty()) { return 0; }
-        int h = matrix.size(), w = matrix[0].size();
+        int h = matrix.size();
+        int w = matrix.front().size();
         int ans = 0, memo = 0;
         vector<int> dp(w, 0);
         for (int i = 0; i < h; i++) {
