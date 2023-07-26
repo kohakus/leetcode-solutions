@@ -1,13 +1,14 @@
 // C++ solution.
 
-// O(1) space
+// Time complexity: O(N)
+// Space complexity: O(1)
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         int n = nums.size();
         for (int i = 0; i < n; i++) {
             while (nums[i] > 0 && nums[i] <= n && nums[nums[i]-1] != nums[i]) {
-                swap(nums[i], nums[nums[i]-1]);
+                std::swap(nums[i], nums[nums[i]-1]);
             }
         }
         for (int i = 0; i < n; i++) {
@@ -17,12 +18,13 @@ public:
     }
 };
 
-// O(N) space
+// Time complexity: O(N)
+// Space complexity: O(N)
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         int n = nums.size();
-        vector<bool> bucket(n+1, false);
+        std::vector<bool> bucket(n+1, false);
         for (int i = 0; i < n; i++) {
             if (nums[i] > 0 && nums[i] <= n) {
                 bucket[nums[i]] = true;

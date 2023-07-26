@@ -1,5 +1,7 @@
 // C++ solution.
 
+// Greedy.
+// Time complexity: O(N)
 class Solution {
 public:
     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {

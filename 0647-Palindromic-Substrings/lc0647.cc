@@ -1,6 +1,7 @@
 // C++ solution.
 
-// Bruteforce. Time: O(N^2)
+// Bruteforce
+// Time complexity: O(N^2)
 class Solution {
 public:
     int countSubstrings(string s) {
@@ -18,3 +19,6 @@ public:
         return ans;
     }
 };
+
+// Manacher Algorithm
+// Time complexity: O(N)
