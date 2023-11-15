@@ -4,6 +4,9 @@
 class Solution {
 public:
     int searchInsert(vector<int>& nums, int target) {
+        // since c++17
+        // return std::distance(nums.begin(), std::lower_bound(nums.begin(), nums.end(), target));
+
         return std::lower_bound(nums.begin(), nums.end(), target) - nums.begin();
     }
 };

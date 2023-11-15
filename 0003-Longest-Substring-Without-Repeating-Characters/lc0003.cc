@@ -5,17 +5,18 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        std::unordered_map<char, int> poslog;
-        int start = 0;
-        int ans = 0;
+        std::unordered_map<char, int> pos_map;
+        int start_pos = 0;
+        int longest_len = 0;
         for (int i = 0; i < s.size(); i++) {
-            if (poslog.find(s[i]) != poslog.end()) {
-                start = std::max(start, poslog[s[i]] + 1);
+            auto exists_pos = pos_map.find(s[i]);
+            if (exists_pos != pos_map.end() && exists_pos->second >= start_pos) {
+                start_pos = exists_pos->second + 1;
             }
-            poslog[s[i]] = i;
-            ans = std::max(ans, i-start+1);
+            pos_map[s[i]] = i;
+            longest_len = std::max(longest_len, i-start_pos+1);
         }
-        return ans;
+        return longest_len;
     }
 };
 
