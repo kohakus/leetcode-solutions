@@ -2,43 +2,35 @@
 
 class LRUCache {
 public:
-    LRUCache(int capacity) : _capacity(capacity) {}
-
-    int get(int key) {
-        auto it = _cache.find(key);
-        if (it == _cache.end()) { return -1; }
-        update(it);
-        return it->second.first;
+    LRUCache(int capacity) : _cap{capacity} {
     }
-
+    
+    int get(int key) {
+        if (_tbl.count(key) == 0) {
+            return -1;
+        }
+        _lst.splice(_lst.begin(), _lst, _tbl[key]);
+        return _lst.front().second;
+    }
+    
     void put(int key, int value) {
-        auto it = _cache.find(key);
-        if (it != _cache.end()) {
-            update(it);
-            it->second.first = value;
+        if (_tbl.count(key) > 0) {
+            _lst.splice(_lst.begin(), _lst, _tbl[key]);
+            _lst.front().second = value;
         } else {
-            if (_capacity == _cache.size()) {
-                _cache.erase(_used.back());
-                _used.pop_back();
+            _lst.emplace_front(key, value);
+            _tbl[key] = _lst.begin();
+            if (_lst.size() > _cap) {
+                _tbl.erase(_lst.back().first);
+                _lst.pop_back();
             }
-            _used.push_front(key);
-            _cache[key] = {value, _used.begin()};
         }
     }
 private:
-    // key, value and link
-    typedef unordered_map<int, pair<int, list<int>::iterator>> LinkedHash;
-
-    int _capacity;
-    list<int> _used;
-    LinkedHash _cache;
-
-    void update(LinkedHash::iterator& it) {
-        int key = it->first;
-        _used.erase(it->second.second);
-        _used.push_front(key);
-        it->second.second = _used.begin();
-    }
+    using object = std::pair<int, int>;
+    std::list<object> _lst;
+    std::unordered_map<int, std::list<object>::iterator> _tbl;
+    int _cap;
 };
 
 /**
