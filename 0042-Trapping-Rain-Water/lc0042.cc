@@ -36,20 +36,18 @@ public:
 class Solution {
 public:
     int trap(vector<int>& height) {
-        stack<int> monostack;
-        int water = 0;
-        for (int i = 0; i < height.size();) {
-            if (monostack.empty() || height[i] <= height[monostack.top()]) {
-                monostack.push(i++);
-            } else {
-                int bar = monostack.top();
-                monostack.pop();
-                if (!monostack.empty()) {
-                    int lower_level = std::min(height[monostack.top()], height[i]);
-                    water += (lower_level - height[bar]) * (i - monostack.top() - 1);
+        std::stack<int> stk;
+        int ans = 0;
+        for (int i = 0; i < height.size(); i++) {
+            for (;!stk.empty() && height[stk.top()] < height[i];) {
+                int barh = height[stk.top()];
+                stk.pop();
+                if (!stk.empty()) {
+                    ans += (std::min(height[stk.top()], height[i])-barh) * (i-stk.top()-1);
                 }
             }
+            stk.push(i);
         }
-        return water;
+        return ans;
     }
 };

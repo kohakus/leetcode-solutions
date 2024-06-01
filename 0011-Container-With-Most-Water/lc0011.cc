@@ -7,18 +7,13 @@
 class Solution {
 public:
     int maxArea(vector<int>& height) {
-        int pos_l = 0;
-        int pos_r = height.size()-1;
-        int max_water = 0;
-        while (pos_l < pos_r) {
-            int water_level = std::min(height[pos_l], height[pos_r]);
-            max_water = std::max(max_water, water_level * (pos_r-pos_l));
-            if (height[pos_l] < height[pos_r]) {
-                pos_l++;
-            } else {
-                pos_r--;
-            }
+        int ans = 0;
+        int lpos = 0;
+        int rpos = height.size() - 1;
+        for (;lpos < rpos;) {
+            ans = std::max(ans, std::min(height[lpos], height[rpos]) * (rpos-lpos));
+            height[lpos] < height[rpos] ? lpos++ : rpos--;
         }
-        return max_water;
+        return ans;
     }
 };

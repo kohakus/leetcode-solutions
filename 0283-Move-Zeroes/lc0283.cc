@@ -11,9 +11,7 @@ public:
                 nums[setpos++] = nums[i];
             }
         }
-        while (setpos < nums.size()) {
-            nums[setpos++] = 0;
-        }
+        std::fill(nums.begin()+setpos, nums.end(), 0);
     }
 };
 
