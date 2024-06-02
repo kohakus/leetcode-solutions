@@ -27,3 +27,24 @@ private:
         }
     }
 };
+
+// another way
+class Solution {
+public:
+    void flatten(TreeNode* root) {
+        helper(root);
+    }
+
+    TreeNode* helper(TreeNode* root) {
+        if (root == nullptr) { return nullptr; }
+        if (root->left == nullptr && root->right == nullptr) { return root; }
+        TreeNode* ltail = helper(root->left);
+        TreeNode* rtail = helper(root->right);
+        if (ltail) {
+            ltail->right = root->right;
+            root->right = root->left;
+        }
+        root->left = nullptr;
+        return rtail == nullptr? ltail : rtail;
+    }
+};
