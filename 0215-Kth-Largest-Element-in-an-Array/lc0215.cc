@@ -4,7 +4,7 @@
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        partial_sort(nums.begin(), nums.begin()+k, nums.end(), greater<int>());
+        std::partial_sort(nums.begin(), nums.begin()+k, nums.end(), std::greater<int>());
         return nums[k-1];
     }
 };
@@ -13,9 +13,9 @@ public:
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        make_heap(nums.begin(), nums.end());
+        std::make_heap(nums.begin(), nums.end());
         for (int i = 0; i < k-1; i++) {
-            pop_heap(nums.begin(), nums.end()-i);
+            std::pop_heap(nums.begin(), nums.end()-i);
         }
         return nums.front();
     }
@@ -25,35 +25,34 @@ public:
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        srand(time(0));
         return quickSelect(nums, 0, nums.size()-1, nums.size()-k);
     }
 
-    int quickSelect(vector<int>& nums, int l, int r, int idx) {
-        int axis = partition(nums, l, r);
-        if (axis == idx) {
-            return nums[axis];
+    int quickSelect(std::vector<int>& nums, int lpos, int rpos, int idx) {
+        int axisl = lpos;
+        int axisr = rpos;
+        partition(nums, axisl, axisr);
+        if (axisl > idx) {
+            return quickSelect(nums, lpos, axisl-1, idx);
+        } else if (axisr < idx) {
+            return quickSelect(nums, axisr+1, rpos, idx);
         } else {
-            return axis < idx ? quickSelect(nums, axis+1, r, idx) : quickSelect(nums, l, axis-1, idx);
+            return nums[idx];
         }
     }
 
-    int partition(vector<int>& nums, int l, int r) {
-        int random_pos = rand() % (r - l + 1) + l;
-        swap(nums[r], nums[random_pos]);
-        return _partition(nums, l, r);
-    }
-
-private:
-    int _partition(vector<int>& nums, int l, int r) {
-        int x = nums[r];
-        int i = l - 1;
-        for (int j = l; j < r; j++) {
-            if (nums[j] <= x) {
-                swap(nums[++i], nums[j]);
+    void partition(std::vector<int>& nums, int& lpos, int& rpos) {
+        int randpos = std::rand() % (rpos-lpos+1) + lpos;
+        int x = nums[randpos];
+        int mid = lpos;
+        for (;mid <= rpos;) {
+            if (nums[mid] == x) {
+                mid++;
+            } else if (nums[mid] < x) {
+                std::swap(nums[lpos++], nums[mid++]);
+            } else {
+                std::swap(nums[mid], nums[rpos--]);
             }
         }
-        swap(nums[i+1], nums[r]);
-        return i+1;
     }
 };
